@@ -1,0 +1,7 @@
+{
+  "name": "medinno",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
