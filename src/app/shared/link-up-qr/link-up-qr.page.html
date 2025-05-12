@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar class="dashboard-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Activar Paneles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="activate-content" fullscreen>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Vincular Panel</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-item lines="full">
+              <ion-label position="stacked">Usuario</ion-label>
+              <ion-input
+                type="text"
+                [value]="'ejemplo_usuario'"
+                readonly
+              ></ion-input>
+            </ion-item>
+
+            <ion-item lines="full">
+              <ion-label position="stacked">Selecciona Paciente</ion-label>
+              <ion-select [(ngModel)]="selectedPatient" placeholder="Elige uno">
+                <ion-select-option *ngFor="let p of patients" [value]="p">
+                  {{ p }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <div class="button-row">
+              <ion-button expand="block" (click)="scanQr()">
+                Escanear QR
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

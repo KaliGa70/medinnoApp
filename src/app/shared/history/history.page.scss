@@ -1,0 +1,76 @@
+.historial-content,
+.historial-content ion-searchbar,
+.historial-content ion-list,
+.historial-content ion-item {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
+.historial-content {
+  --background: #ffffff !important;
+  padding: 0;
+}
+
+.dashboard-toolbar {
+  --background: linear-gradient(135deg, #00c9ff, #92fe9d) !important;
+  --color: #ffffff;
+}
+
+.hist-search {
+  width: calc(100% - 32px);
+  margin: 12px auto;
+  height: 40px;
+  --background: #f4f4f4 !important;
+  --bar-background: #f4f4f4;
+  --animated-background: #f4f4f4;
+  --placeholder-color: #999999;
+  --icon-color: #00c9ff;
+  --border-radius: 8px;
+  box-shadow: none;
+}
+
+.history-list {
+  --background: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.history-list ion-item {
+  --background: transparent !important;
+  padding: 12px 16px;
+  --inner-border-width: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.history-list ion-item:last-child {
+  border-bottom: none;
+}
+
+.history-list ion-label h3 {
+  margin: 0;
+  color: #333333;
+  font-weight: 600;
+}
+
+.history-list ion-label p {
+  margin: 4px 0 0;
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.no-history {
+  --background: transparent;
+  padding: 16px 0;
+  justify-content: center;
+}
+
+.no-history ion-label {
+  color: #777777;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+}
+
+.dashboard-toolbar {
+  --background: linear-gradient(135deg, #00c9ff, #92fe9d) !important;
+  --color: #ffffff;
+}

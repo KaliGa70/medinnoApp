@@ -9,10 +9,6 @@ import {
 } from '@angular/forms';
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonCardSubtitle,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -20,6 +16,7 @@ import {
   IonInput,
   IonButton,
 } from '@ionic/angular/standalone';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -32,23 +29,24 @@ import {
     IonCardTitle,
     IonCardHeader,
     IonCard,
-    IonCardSubtitle,
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
     IonCardContent,
     ReactiveFormsModule,
+    RouterModule,
   ],
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,  
-  ) {}
+    private fb: FormBuilder,
+    private router: Router
+  ) 
+  {
+    // Constructor vacío
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -58,8 +56,14 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    
+    if (this.loginForm.valid) {
+      const credentials = this.loginForm.value;
+      console.log('Login:', credentials);
+
+      // TODO: autenticar…
+
+      // Si la autenticación es exitosa, redirige al dashboard:
+      this.router.navigate(['/home']);
+    }
   }
-
-
 }

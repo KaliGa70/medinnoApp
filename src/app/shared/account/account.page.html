@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar class="dashboard-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content" fullscreen>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <div class="avatar-container">
+            <ion-avatar>
+              <img src="assets/img/user-avatar.png" alt="Avatar usuario" />
+            </ion-avatar>
+          </div>
+          <ion-card-content>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+                <ion-label>
+                  <h3>Nombre:</h3>
+                  <p>Juan Pérez</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-label>
+                  <h3>Correo:</h3>
+                  <p>juan.perez&#64;example.com</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon slot="start" name="call-outline"></ion-icon>
+                <ion-label>
+                  <h3>Teléfono:</h3>
+                  <p>+34 600 123 456</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+            <div class="button-row">
+              <ion-button expand="block" class="edit-btn">
+                Editar Perfil
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

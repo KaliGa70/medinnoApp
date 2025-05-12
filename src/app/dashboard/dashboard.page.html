@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar class="dashboard-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="dashboard-content">
+  <ion-grid>
+    <!-- Alertas Activas -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header class="alerts-header">
+            <ion-card-title>Alertas Activas</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let alert of activeAlerts">
+                <ion-label>
+                  <h3>{{ alert.patient }}</h3>
+                  <p>{{ alert.message }} • {{ alert.time }}</p>
+                </ion-label>
+                <ion-button
+                  size="small"
+                  fill="outline"
+                  class="attend-btn"
+                  (click)="attendAlert(alert.id)"
+                >
+                  Atendido
+                </ion-button>
+              </ion-item>
+              <ion-item *ngIf="activeAlerts.length === 0">
+                <ion-label class="no-alerts">No hay alertas activas</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- Estadísticas -->
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="4" *ngFor="let stat of stats">
+        <ion-card>
+          <ion-card-header class="stat-header">
+            <ion-card-title>{{ stat.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="stat-card-content">
+            <ion-icon [icon]="stat.icon" class="stat-icon"></ion-icon>
+            <div class="stat-value">{{ stat.value }}</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

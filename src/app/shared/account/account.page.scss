@@ -1,0 +1,88 @@
+.dashboard-toolbar {
+  --background: linear-gradient(135deg, #00c9ff, #92fe9d) !important;
+  --color: #ffffff;
+}
+
+.profile-content {
+  --background: #ffffff !important;
+  padding: 16px;
+}
+
+/* Tarjeta principal */
+ion-card {
+  --background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  --border-width: 0;
+}
+
+/* Avatar centrado */
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+ion-avatar {
+  width: 80px;
+  height: 80px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Forzar fondo blanco en lista */
+.profile-list,
+.profile-list ion-item {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* Estilos de items */
+.profile-list ion-item {
+  --inner-border-width: 1px;
+  --border-color: #eee;
+  padding: 12px 0;
+}
+
+.profile-list ion-item:last-child {
+  --inner-border-width: 0;
+}
+
+ion-item ion-icon {
+  color: #00c9ff;
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+ion-item h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333333;
+}
+
+ion-item p {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: #666666;
+}
+
+.button-row {
+  margin-top: 24px;
+}
+
+.edit-btn {
+  --background: linear-gradient(135deg, #00c9ff, #92fe9d);
+  --color: #ffffff;
+  border-radius: 8px;
+}
+
+/* Asegurar contenido en claro aún en Dark Mode */
+.profile-content,
+.profile-content ion-card,
+.profile-content ion-list,
+.profile-content ion-item {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
