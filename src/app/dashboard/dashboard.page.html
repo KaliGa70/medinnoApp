@@ -1,12 +1,11 @@
 <ion-header>
   <ion-toolbar class="dashboard-toolbar">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content class="dashboard-content">
   <ion-grid>
@@ -33,8 +32,11 @@
                   Atendido
                 </ion-button>
               </ion-item>
-              <ion-item *ngIf="activeAlerts.length === 0">
+              <ion-item *ngIf="!loadingAlerts && activeAlerts.length === 0">
                 <ion-label class="no-alerts">No hay alertas activas</ion-label>
+              </ion-item>
+              <ion-item *ngIf="loadingAlerts">
+                <ion-label>Cargando alertas...</ion-label>
               </ion-item>
             </ion-list>
           </ion-card-content>

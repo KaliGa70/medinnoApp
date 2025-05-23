@@ -1,78 +1,139 @@
+// src/app/dashboard/dashboard.page.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { peopleOutline, clipboardOutline } from 'ionicons/icons';
+import * as IonIcons from 'ionicons/icons';
+import {
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonIcon,
+  IonCol,
+  IonRow,
+  IonGrid,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+} from '@ionic/angular/standalone';
+import { finalize } from 'rxjs/operators';
+import { AuthService, CaregiverProfile } from '../core/services/auth/auth.service';
+import { Alert, DashboardService } from '../core/services/DashboardService/dashboard.service';
+
+type IconName = keyof typeof IonIcons;
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [
+    CommonModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonMenuButton,
+    IonTitle,
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonIcon,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonButton,
+  ],
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  private ICON_MAP: Record<string, any> = IonIcons;
+  
   // Mapa de tipos de alerta
-BUTTON_ALERT_MAP = {
-  0: 'CALL_NURSE',
-  1: 'EMERGENCY',
-  2: 'MEDICATION',
-  3: 'ASSISTANCE',
-  4: 'PAIN',
-  5: 'MEAL',
-  6: 'WATER',
-};
+  BUTTON_ALERT_MAP = {
+    0: 'CALL_NURSE',
+    1: 'EMERGENCY',
+    2: 'MEDICATION',
+    3: 'ASSISTANCE',
+    4: 'PAIN',
+    5: 'MEAL',
+    6: 'WATER',
+  };
 
-// Ejemplo de un historial de alertas usando uno de esos tipos
-activeAlerts = [
-  {
-    id: 1,
-    patient: 'Ana Gómez',
-    message: this.BUTTON_ALERT_MAP[1],   // "EMERGENCY"
-    time: '08:30 AM'
-  },
-  {
-    id: 2,
-    patient: 'Luis Martínez',
-    message: this.BUTTON_ALERT_MAP[4],   // "PAIN"
-    time: '09:15 AM'
-  },
-  {
-    id: 3,
-    patient: 'María Pérez',
-    message: this.BUTTON_ALERT_MAP[2],   // "MEDICATION"
-    time: '10:00 AM'
-  },
-  {
-    id: 4,
-    patient: 'Juan López',
-    message: this.BUTTON_ALERT_MAP[3],   // "ASSISTANCE"
-    time: '11:00 AM'
-  },
-  {
-    id: 5,
-    patient: 'Laura Torres',
-    message: this.BUTTON_ALERT_MAP[5],   // "MEAL"
-    time: '12:00 PM'
-  },
-  {
-    id: 6,
-    patient: 'Carlos Ruiz',
-    message: this.BUTTON_ALERT_MAP[0],   // "CALL_NURSE"
-    time: '01:00 PM'
-  },
-];
+  activeAlerts: Alert[] = [];
+  stats: Array<{ title: string; value: number; icon: typeof IonIcons[IconName] }> = [];
+  loadingAlerts = false;
+  loadingStats = false;
 
-  stats = [
-    { title: 'Total Pacientes', value: 120, icon: peopleOutline },
-    { title: 'Panels Activos',  value: 95,  icon: clipboardOutline },
-  ];
+  caregiverData?: CaregiverProfile;
 
-  constructor() {}
+  constructor(
+    private dashboardService: DashboardService,
+    private authService: AuthService,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Primero traemos el perfil para obtener el caregiver_id
+    this.authService.getCurrentCaregiver()
+      .subscribe({
+        next: data => {
+          this.caregiverData = data;
+          this.loadAlerts();
+          this.loadStats();
+        },
+        error: err => {
+          console.error('No se pudo obtener caregiver:', err);
+        }
+      });
+  }
 
-  /** Marca la alerta como atendida y la elimina de la lista */
+  loadAlerts() {
+    this.loadingAlerts = true;
+    this.dashboardService.getActiveAlerts()
+      .pipe(finalize(() => this.loadingAlerts = false))
+      .subscribe({
+        next: alerts => this.activeAlerts = alerts,
+        error: err => {
+          console.error('Error cargando alertas:', err);
+          this.activeAlerts = [];
+        }
+      });
+  }
+
+  loadStats() {
+    if (!this.caregiverData) {
+      console.warn('Sin caregiverData, no cargo estadísticas');
+      return;
+    }
+    this.loadingStats = true;
+    this.dashboardService.getStats(this.caregiverData.caregiver_id)
+      .pipe(finalize(() => this.loadingStats = false))
+      .subscribe({
+        next: statsFromApi => {
+          // Mapear el string "peopleOutline"/"clipboardOutline" a la constante real
+          this.stats = statsFromApi.map(s => ({
+            title: s.title,
+            value: s.value,
+            icon: this.ICON_MAP[s.icon]
+          }));
+        },
+        error: err => {
+          console.error('Error cargando estadísticas:', err);
+          this.stats = [];
+        }
+      });
+  }
+
   attendAlert(id: number): void {
-    this.activeAlerts = this.activeAlerts.filter(alert => alert.id !== id);
+    this.activeAlerts = this.activeAlerts.filter(a => a.id !== id);
   }
 }

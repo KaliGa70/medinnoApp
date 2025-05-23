@@ -20,21 +20,21 @@
           <ion-card-content>
             <ion-list lines="none">
               <ion-item>
-                <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+                <ion-icon slot="start" [icon]="iconPerson"></ion-icon>
                 <ion-label>
                   <h3>Nombre:</h3>
                   <p>Juan Pérez</p>
                 </ion-label>
               </ion-item>
               <ion-item>
-                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-icon slot="start" [icon]="iconMail"></ion-icon>
                 <ion-label>
                   <h3>Correo:</h3>
                   <p>juan.perez&#64;example.com</p>
                 </ion-label>
               </ion-item>
               <ion-item>
-                <ion-icon slot="start" name="call-outline"></ion-icon>
+                <ion-icon slot="start" [icon]="iconCall"></ion-icon>
                 <ion-label>
                   <h3>Teléfono:</h3>
                   <p>+34 600 123 456</p>
@@ -44,6 +44,16 @@
             <div class="button-row">
               <ion-button expand="block" class="edit-btn">
                 Editar Perfil
+              </ion-button>
+
+              <!-- Botón de logout -->
+              <ion-button
+                expand="block"
+                color="danger"
+                fill="outline"
+                (click)="onLogout()"
+              >
+                Cerrar sesión
               </ion-button>
             </div>
           </ion-card-content>

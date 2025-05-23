@@ -1,59 +1,74 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <!-- Side Menu -->
-    <ion-menu contentId="main-content" type="overlay" class="custom-menu"       (ionBackdropTap)="closeMenu()"
->
-<ion-header>
-  <ion-toolbar>
-    <!-- Botón con logo al inicio -->
-    <ion-buttons slot="start">
-      <ion-img
-        src="assets/img/medinnoLogo-sintexto.png"
-        class="menu-logo"
-        alt="Logo Medinno"
-      ></ion-img>
-    </ion-buttons>
+    <ion-menu
+      contentId="main-content"
+      type="overlay"
+      class="custom-menu"
+      (ionBackdropTap)="closeMenu()"
+    >
+      <ion-header>
+        <ion-toolbar>
+          <!-- Botón con logo al inicio -->
+          <ion-buttons slot="start">
+            <ion-img
+              src="assets/img/medinnoLogo-sintexto.png"
+              class="menu-logo"
+              alt="Logo Medinno"
+            ></ion-img>
+          </ion-buttons>
 
-    <!-- Título -->
-    <ion-title class="menu-title">MEDINNO</ion-title>
+          <!-- Título -->
+          <ion-title class="menu-title">MEDINNO</ion-title>
 
-    <!-- Toggle Dark Mode -->
-    <ion-buttons slot="end">
-      <ion-toggle
-        class="dark-toggle"
-        [(ngModel)]="darkMode"
-        [checked]="darkMode"
-        (ionChange)="toggleDarkMode()"
-        aria-label="Toggle Dark Mode"
-      ></ion-toggle>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
+          <!-- Toggle Dark Mode -->
+          <ion-buttons slot="end">
+            <ion-toggle
+              class="dark-toggle"
+              [(ngModel)]="darkMode"
+              [checked]="darkMode"
+              (ionChange)="toggleDarkMode()"
+              aria-label="Toggle Dark Mode"
+            ></ion-toggle>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
 
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Menú</ion-list-header>
 
-          <!-- Iteración de páginas -->
-          @for (p of appPages; track p) {
-          <ion-menu-toggle auto-hide="false">
-            <ion-item
-              button
-              [routerLink]="[p.url]"
-              routerDirection="root"
-              routerLinkActive="selected"
-              lines="none"
-              detail="false"
-            >
-              <ion-icon
-                slot="start"
-                [icon]="p.icon + '-sharp'"
-              ></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+          <ng-container *ngIf="isLoggedIn$ | async; else notLogged">
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+              <ion-item
+                button
+                [routerLink]="[p.url]"
+                routerDirection="root"
+                routerLinkActive="selected"
+                lines="none"
+                detail="false"
+                (click)="closeMenu()"
+              >
+                <ion-icon slot="start" [icon]="p.icon"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false">
+              <ion-item button lines="none" (click)="logout()">
+                <ion-icon slot="start" [icon]="logoutIcon"></ion-icon>
+                <ion-label>Cerrar sesión</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
+
+          <ng-template #notLogged>
+            <ion-item lines="none" detail="false" disabled>
+              <ion-label>
+                Necesitas iniciar sesión para ver este menú.
+              </ion-label>
             </ion-item>
-          </ion-menu-toggle>
-          }
+          </ng-template>
         </ion-list>
       </ion-content>
     </ion-menu>

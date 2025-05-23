@@ -35,7 +35,7 @@
             expand="block"
             type="submit"
             class="login-btn"
-            [disabled]="!loginForm.valid"
+            [disabled]="!loginForm.valid || submitting"
           >
             Ingresar
           </ion-button>
@@ -45,6 +45,7 @@
             fill="outline"
             type="button"
             class="signup-btn"
+            [disabled]=" submitting"
             [routerLink]="['/auth/register']"
           >
             Registrarse
